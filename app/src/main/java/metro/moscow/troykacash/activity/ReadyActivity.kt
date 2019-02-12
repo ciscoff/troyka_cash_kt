@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import metro.moscow.troykacash.R
 import metro.moscow.troykacash.presenter.Presenter
 import metro.moscow.troykacash.presenter.ReadyPresenter
@@ -48,14 +49,32 @@ class ReadyActivity : AppCompatActivity(), TroykaView {
      * TODO: файла
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val cardId = item.title
 
-        SharedData.menuItems.toList().contains(cardId)
+        /**
+         * Обрати внимание на то как вызывается метод find. Элемент коллекции,
+         * который он получает, определяется как it (другие литералы не работают).
+         * Код предиката в фигурных скобках, не круглых.
+         */
+        val cardId = SharedData.menuItems.toList().find{it == item.title}
 
-        return true;
+        if(cardId != null) {
+            val intent = Intent(this, DumpListActivity::class.java)
+            // Put <key, value> pair
+            intent.putExtra(getString(R.string.card_id), cardId)
+            startActivityForResult(intent, 1)
+            return true
+        }
+        return true
     }
 
+    /**
+     * TODO: Получаем имя выбранного файла с дампом
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+
+        val file = data?.getStringExtra(getString(R.string.dump_file))
+        val cardId = data?.getStringExtra(getString(R.string.card_id))
+
+        Toast.makeText(this, "Dump file is: " + file + "\ncardId is: " + cardId, Toast.LENGTH_LONG).show()
     }
 }
