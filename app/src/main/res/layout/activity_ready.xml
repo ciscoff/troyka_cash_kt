@@ -6,7 +6,7 @@
     android:background="@drawable/ic_launcher_background"
     android:orientation="vertical">
         <TextView
-            android:id="@+id/text"
+            android:id="@+id/readyTextView"
             style="@style/TextViewCustom"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
