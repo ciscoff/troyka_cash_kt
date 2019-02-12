@@ -14,16 +14,18 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <!-- Text color of Views in window -->
-        <item name="android:textColor">@color/foreground_material_light</item>
+        <item name="android:textColor">@color/foregroundCustom</item>
 
         <!-- To change the popup menu and app text color  -->
-        <item name="android:textColorPrimary">@color/foreground_material_light</item>
+        <item name="android:textColorPrimary">@color/foregroundCustom</item>
 
         <!-- Menu item background -->
         <item name="android:itemBackground">@color/colorPrimaryDark</item>
 
         <!-- Buttons Style -->
         <item name="buttonStyle">@style/AppTheme.Button</item>
+
+        <item name="actionBarPopupTheme">@style/SubmenuStyle</item>
     </style>
 
     <!-- Buttons style  -->
@@ -31,16 +33,16 @@
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
-    <!-- MainActivity TextView style  -->
-    <style name="tv_info" parent="@android:style/TextAppearance">
+    <!-- All activities TextView style  -->
+    <style name="TextViewCustom" parent="@android:style/TextAppearance">
         <item name="android:typeface">monospace</item>
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="MenuTextStyle"
-        parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-        <item name="android:textColor">#F0F</item>
+    <!-- Popup menu style -->
+    <style name="SubmenuStyle" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:colorBackground">@color/colorPrimary</item>
+        <item name="android:textColor">@color/foregroundCustom</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">24dip</item>
     </style>
 </resources>

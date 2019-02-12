@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TroykaCash</string>
+    <string name="card_menu">Card dumps</string>
+    <string name="action_save">Save</string>
+    <string name="action_burn">Burn</string>
+    <string name="action_cancel">Cancel</string>
 </resources>
