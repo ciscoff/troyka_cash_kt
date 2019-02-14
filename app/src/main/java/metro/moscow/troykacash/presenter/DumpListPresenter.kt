@@ -4,7 +4,7 @@ import android.os.Environment
 import metro.moscow.troykacash.utils.SharedData
 import java.io.File
 
-class DumpListPresenter(view: TroykaView): Presenter {
+class DumpListPresenter(val view: TroykaView, val presenter: Presenter?): Presenter {
 
     /**
      * TODO: Get app files directory

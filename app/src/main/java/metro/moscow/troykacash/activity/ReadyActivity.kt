@@ -19,7 +19,7 @@ class ReadyActivity : AppCompatActivity(), TroykaView {
     /**
      * Presenter for current activity
      */
-    val presenter: Presenter = ReadyPresenter(this);
+    val presenter: Presenter = ReadyPresenter(this, null)
 
     /**
      * TODO: Create activity
@@ -31,6 +31,8 @@ class ReadyActivity : AppCompatActivity(), TroykaView {
         val txtView = findViewById<TextView>(R.id.readyTextView)
         val btnSave = findViewById<Button>(R.id.btnSave)
         val btnCancel = findViewById<Button>(R.id.btnCancel)
+
+        presenter.onStart()
     }
 
     /**
@@ -39,7 +41,7 @@ class ReadyActivity : AppCompatActivity(), TroykaView {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val subMenu = menu?.addSubMenu(R.string.card_menu)
 
-        for (item in SharedData.menuItems) subMenu?.add(item)
+        for (item in presenter.getMenuItems()) subMenu?.add(item)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -49,22 +51,8 @@ class ReadyActivity : AppCompatActivity(), TroykaView {
      * TODO: файла
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        /**
-         * Обрати внимание на то как вызывается метод find. Элемент коллекции,
-         * который он получает, определяется как it (другие литералы не работают).
-         * Код предиката в фигурных скобках, не круглых.
-         */
-        val cardId = SharedData.menuItems.toList().find{it == item.title}
-
-        if(cardId != null) {
-            val intent = Intent(this, DumpListActivity::class.java)
-            // Put <key, value> pair
-            intent.putExtra(getString(R.string.card_id), cardId)
-            startActivityForResult(intent, 1)
-            return true
-        }
-        return true
+        presenter.onMenuSelected(item.title.toString())
+        return super.onOptionsItemSelected(item)
     }
 
     /**
@@ -76,5 +64,15 @@ class ReadyActivity : AppCompatActivity(), TroykaView {
         val cardId = data?.getStringExtra(getString(R.string.card_id))
 
         Toast.makeText(this, "Dump file is: " + file + "\ncardId is: " + cardId, Toast.LENGTH_LONG).show()
+    }
+
+    /**
+     * TODO: Запустить активити
+     */
+    override fun startActivity(cardId: String, cls: Class<*>) {
+        val intent = Intent(this, cls)
+        // Put <key, value> pair
+        intent.putExtra(getString(R.string.card_id), cardId)
+        startActivityForResult(intent, 1)
     }
 }

@@ -18,7 +18,7 @@ class DumpListActivity: AppCompatActivity(), TroykaView {
     /**
      * Presenter for current activity
      */
-    val presenter: Presenter = DumpListPresenter(this);
+    val presenter: Presenter = DumpListPresenter(this, null)
 
     /**
      * @savedInstanceState через extra получает cardId выбранной карты

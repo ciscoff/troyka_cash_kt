@@ -13,7 +13,7 @@ class BurnActivity: AppCompatActivity(), TroykaView {
     /**
      * Presenter for current activity
      */
-    val presenter: Presenter = BurnPresenter(this);
+    val presenter: Presenter = BurnPresenter(this, null);
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -11,7 +11,7 @@ class SaveActivity: AppCompatActivity(), TroykaView {
     /**
      * Presenter for current activity
      */
-    val presenter: Presenter = SavePresenter(this)
+    val presenter: Presenter = SavePresenter(this, null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
