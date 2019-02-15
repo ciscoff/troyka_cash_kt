@@ -69,10 +69,10 @@ class ReadyActivity : AppCompatActivity(), TroykaView {
     /**
      * TODO: Запустить активити
      */
-    override fun startActivity(cardId: String, cls: Class<*>) {
+    override fun startActivity(keyId: Int, value: String, cls: Class<*>) {
         val intent = Intent(this, cls)
         // Put <key, value> pair
-        intent.putExtra(getString(R.string.card_id), cardId)
+        intent.putExtra(getString(keyId), value)
         startActivityForResult(intent, 1)
     }
 }

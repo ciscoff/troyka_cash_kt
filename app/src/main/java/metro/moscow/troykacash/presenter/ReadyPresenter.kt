@@ -1,5 +1,6 @@
 package metro.moscow.troykacash.presenter
 
+import metro.moscow.troykacash.R
 import metro.moscow.troykacash.activity.DumpListActivity
 import metro.moscow.troykacash.utils.SharedData
 
@@ -21,7 +22,7 @@ class ReadyPresenter(val view: TroykaView, val presenter: Presenter?) : Presente
         val cardId = getMenuItems().toList().find { it == item }
 
         if(cardId != null) {
-            view.startActivity(cardId, DumpListActivity::class.java)
+            view.startActivity(R.string.card_id, cardId, DumpListActivity::class.java)
         }
     }
 }
