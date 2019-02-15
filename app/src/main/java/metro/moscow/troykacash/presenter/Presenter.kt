@@ -36,12 +36,15 @@ interface Presenter {
     }
 
     /**
-     *
+     * Реакция на выбор меню
      */
     fun onMenuSelected(item: String) {
         return
     }
 
+    /**
+     * Обработка результата вторичной активити
+     */
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         return
     }

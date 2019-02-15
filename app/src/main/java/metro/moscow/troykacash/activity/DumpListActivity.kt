@@ -8,9 +8,14 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
 import metro.moscow.troykacash.R
+import metro.moscow.troykacash.dao.FileHelper
+import metro.moscow.troykacash.interactor.DumpListInteractor
+import metro.moscow.troykacash.interactor.ReadyInteractor
 import metro.moscow.troykacash.presenter.DumpListPresenter
 import metro.moscow.troykacash.presenter.Presenter
+import metro.moscow.troykacash.presenter.ReadyPresenter
 import metro.moscow.troykacash.presenter.TroykaView
+import metro.moscow.troykacash.repository.DumpRepositoryImpl
 import java.io.File
 
 class DumpListActivity: AppCompatActivity(), TroykaView {
@@ -18,7 +23,7 @@ class DumpListActivity: AppCompatActivity(), TroykaView {
     /**
      * Presenter for current activity
      */
-    val presenter: Presenter = DumpListPresenter(this, null)
+    val presenter: Presenter = createPresenter()
 
     /**
      * @savedInstanceState через extra получает cardId выбранной карты
@@ -63,5 +68,16 @@ class DumpListActivity: AppCompatActivity(), TroykaView {
             finish()
         }
     }
+
+    /**
+     * TODO: Создать презентер, нацеленный на нужную репозиторию
+     */
+    private fun createPresenter(): DumpListPresenter {
+        val fileHelper = FileHelper()
+        val dumpRepo = DumpRepositoryImpl(fileHelper)
+        val interactor = DumpListInteractor(dumpRepo)
+        return DumpListPresenter(this, interactor)
+    }
+
 }
 

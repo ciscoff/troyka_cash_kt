@@ -6,10 +6,11 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import metro.moscow.troykacash.R
 import metro.moscow.troykacash.activity.DumpListActivity
+import metro.moscow.troykacash.interactor.Interactor
 import metro.moscow.troykacash.utils.SharedData
 import metro.moscow.troykacash.utils.SharedData.Companion.REQUEST_DUMPLIST
 
-class ReadyPresenter(val view: TroykaView, val presenter: Presenter?) : Presenter {
+class ReadyPresenter(val view: TroykaView, val interactor: Interactor) : Presenter {
 
     /**
      * TODO:Сформировать массив строк для названия пунктов выпадающего меню
@@ -51,9 +52,9 @@ class ReadyPresenter(val view: TroykaView, val presenter: Presenter?) : Presente
 
         val context = (view as AppCompatActivity).applicationContext
 
-        val file = intent?.getStringExtra(context.getString(R.string.dump_file))
+        val fileName = intent?.getStringExtra(context.getString(R.string.dump_file))
         val cardId = intent?.getStringExtra(context.getString(R.string.card_id))
-        Toast.makeText(context, "Dump file is: $file\ncardId is: $cardId", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, "Dump file is: $fileName\ncardId is: $cardId", Toast.LENGTH_LONG).show()
 
 
     }

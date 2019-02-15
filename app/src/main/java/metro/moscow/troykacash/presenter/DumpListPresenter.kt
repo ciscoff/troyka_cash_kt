@@ -1,10 +1,11 @@
 package metro.moscow.troykacash.presenter
 
 import android.os.Environment
+import metro.moscow.troykacash.interactor.Interactor
 import metro.moscow.troykacash.utils.SharedData
 import java.io.File
 
-class DumpListPresenter(val view: TroykaView, val presenter: Presenter?): Presenter {
+class DumpListPresenter(val view: TroykaView, val interactor: Interactor): Presenter {
 
     /**
      * TODO: Get app files directory

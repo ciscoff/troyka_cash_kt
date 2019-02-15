@@ -9,9 +9,12 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import metro.moscow.troykacash.R
+import metro.moscow.troykacash.dao.FileHelper
+import metro.moscow.troykacash.interactor.ReadyInteractor
 import metro.moscow.troykacash.presenter.Presenter
 import metro.moscow.troykacash.presenter.ReadyPresenter
 import metro.moscow.troykacash.presenter.TroykaView
+import metro.moscow.troykacash.repository.DumpRepositoryImpl
 import metro.moscow.troykacash.utils.SharedData
 
 class ReadyActivity : AppCompatActivity(), TroykaView {
@@ -19,7 +22,7 @@ class ReadyActivity : AppCompatActivity(), TroykaView {
     /**
      * Presenter for current activity
      */
-    val presenter: Presenter = ReadyPresenter(this, null)
+    val presenter: Presenter = createPresenter()
 
     /**
      * TODO: Create activity
@@ -32,7 +35,22 @@ class ReadyActivity : AppCompatActivity(), TroykaView {
 //        val btnSave = findViewById<Button>(R.id.btnSave)
 //        val btnCancel = findViewById<Button>(R.id.btnCancel)
 
+    }
+
+    /**
+     * TODO: onStart handler
+     */
+    override fun onStart() {
+        super.onStart()
         presenter.onStart()
+    }
+
+    /**
+     * TODO: onStop handler
+     */
+    override fun onStop() {
+        super.onStop()
+        presenter.onStop()
     }
 
     /**
@@ -70,5 +88,15 @@ class ReadyActivity : AppCompatActivity(), TroykaView {
         // Put <key, value> pair
         intent.putExtra(getString(keyId), value)
         startActivityForResult(intent, requestCode)
+    }
+
+    /**
+     * TODO: Создать презентер, нацеленный на нужную репозиторию
+     */
+    private fun createPresenter(): ReadyPresenter {
+        val fileHelper = FileHelper()
+        val dumpRepo = DumpRepositoryImpl(fileHelper)
+        val interactor = ReadyInteractor(dumpRepo)
+        return ReadyPresenter(this, interactor)
     }
 }

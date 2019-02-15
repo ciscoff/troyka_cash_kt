@@ -1,4 +1,4 @@
 package metro.moscow.troykacash.domain
 
-class TroykaDumpSector8 {
+class TroykaDumpCash {
 }
