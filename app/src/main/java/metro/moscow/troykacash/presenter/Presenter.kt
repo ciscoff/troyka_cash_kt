@@ -1,5 +1,6 @@
 package metro.moscow.troykacash.presenter
 
+import android.content.Intent
 import metro.moscow.troykacash.utils.SharedData
 import java.io.File
 
@@ -11,6 +12,7 @@ interface Presenter {
     fun getAppDir(): File? {
         return null
     }
+
     fun fileList(dir: File): Array<File>? {
         return null
     }
@@ -18,7 +20,7 @@ interface Presenter {
     /**
      * Методы жизненного цикла
      */
-    fun onStart(){
+    fun onStart() {
         return
     }
 
@@ -37,6 +39,10 @@ interface Presenter {
      *
      */
     fun onMenuSelected(item: String) {
+        return
+    }
+
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         return
     }
 

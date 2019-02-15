@@ -5,7 +5,7 @@ interface TroykaView {
         return
     }
 
-    fun startActivity(extraKeyId: Int, extraVal: String, cls: Class<*>) {
+    fun startActivity(extraKeyId: Int, extraVal: String, requestCode: Int, cls: Class<*>) {
         return
     }
 }

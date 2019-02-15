@@ -28,9 +28,9 @@ class ReadyActivity : AppCompatActivity(), TroykaView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ready)
 
-        val txtView = findViewById<TextView>(R.id.readyTextView)
-        val btnSave = findViewById<Button>(R.id.btnSave)
-        val btnCancel = findViewById<Button>(R.id.btnCancel)
+//        val txtView = findViewById<TextView>(R.id.readyTextView)
+//        val btnSave = findViewById<Button>(R.id.btnSave)
+//        val btnCancel = findViewById<Button>(R.id.btnCancel)
 
         presenter.onStart()
     }
@@ -59,20 +59,16 @@ class ReadyActivity : AppCompatActivity(), TroykaView {
      * TODO: Получаем имя выбранного файла с дампом
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
-        val file = data?.getStringExtra(getString(R.string.dump_file))
-        val cardId = data?.getStringExtra(getString(R.string.card_id))
-
-        Toast.makeText(this, "Dump file is: " + file + "\ncardId is: " + cardId, Toast.LENGTH_LONG).show()
+        presenter.onActivityResult(requestCode, resultCode, data)
     }
 
     /**
      * TODO: Запустить активити
      */
-    override fun startActivity(keyId: Int, value: String, cls: Class<*>) {
+    override fun startActivity(keyId: Int, value: String, requestCode: Int, cls: Class<*>) {
         val intent = Intent(this, cls)
         // Put <key, value> pair
         intent.putExtra(getString(keyId), value)
-        startActivityForResult(intent, 1)
+        startActivityForResult(intent, requestCode)
     }
 }

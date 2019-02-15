@@ -1,8 +1,13 @@
 package metro.moscow.troykacash.presenter
 
+import android.content.Context
+import android.content.Intent
+import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
 import metro.moscow.troykacash.R
 import metro.moscow.troykacash.activity.DumpListActivity
 import metro.moscow.troykacash.utils.SharedData
+import metro.moscow.troykacash.utils.SharedData.Companion.REQUEST_DUMPLIST
 
 class ReadyPresenter(val view: TroykaView, val presenter: Presenter?) : Presenter {
 
@@ -22,7 +27,34 @@ class ReadyPresenter(val view: TroykaView, val presenter: Presenter?) : Presente
         val cardId = getMenuItems().toList().find { it == item }
 
         if(cardId != null) {
-            view.startActivity(R.string.card_id, cardId, DumpListActivity::class.java)
+            view.startActivity(R.string.card_id, cardId, REQUEST_DUMPLIST, DumpListActivity::class.java)
         }
+    }
+
+    /**
+     * Обработка результата работы дочернего активити
+     */
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        when(requestCode) {
+            REQUEST_DUMPLIST -> {
+                dumpSelected(data)
+            }
+        }
+        return
+    }
+
+    /**
+     * Обработать выбранный дамп
+     */
+    private fun dumpSelected(intent: Intent?) {
+
+        val context = (view as AppCompatActivity).applicationContext
+
+        val file = intent?.getStringExtra(context.getString(R.string.dump_file))
+        val cardId = intent?.getStringExtra(context.getString(R.string.card_id))
+        Toast.makeText(context, "Dump file is: $file\ncardId is: $cardId", Toast.LENGTH_LONG).show()
+
+
     }
 }
