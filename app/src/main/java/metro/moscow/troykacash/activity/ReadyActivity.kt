@@ -1,5 +1,6 @@
 package metro.moscow.troykacash.activity
 
+import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import metro.moscow.troykacash.R
+import metro.moscow.troykacash.TroykaCashApp
 import metro.moscow.troykacash.dao.FileHelper
 import metro.moscow.troykacash.interactor.ReadyInteractor
 import metro.moscow.troykacash.presenter.Presenter
@@ -22,7 +24,7 @@ class ReadyActivity : AppCompatActivity(), TroykaView {
     /**
      * Presenter for current activity
      */
-    val presenter: Presenter = createPresenter()
+    val presenter: ReadyPresenter = createPresenter()
 
     /**
      * TODO: Create activity
@@ -94,9 +96,11 @@ class ReadyActivity : AppCompatActivity(), TroykaView {
      * TODO: Создать презентер, нацеленный на нужную репозиторию
      */
     private fun createPresenter(): ReadyPresenter {
-        val fileHelper = FileHelper()
+        val fileHelper = (getContext() as TroykaCashApp).fileHelper
         val dumpRepo = DumpRepositoryImpl(fileHelper)
         val interactor = ReadyInteractor(dumpRepo)
         return ReadyPresenter(this, interactor)
     }
+
+
 }

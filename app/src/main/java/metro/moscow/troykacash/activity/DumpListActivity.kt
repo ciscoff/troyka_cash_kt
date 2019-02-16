@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
 import metro.moscow.troykacash.R
+import metro.moscow.troykacash.TroykaCashApp
 import metro.moscow.troykacash.dao.FileHelper
 import metro.moscow.troykacash.interactor.DumpListInteractor
 import metro.moscow.troykacash.interactor.ReadyInteractor
@@ -18,12 +19,16 @@ import metro.moscow.troykacash.presenter.TroykaView
 import metro.moscow.troykacash.repository.DumpRepositoryImpl
 import java.io.File
 
+/**
+ * TODO: Эта активити появляется для показа дампов одной уже
+ * TODO: выбранной карты. Поэтому нужно просто показать дампы
+ * TODO: списком и обработать выбор дампа, вернув его имя.
+ */
 class DumpListActivity: AppCompatActivity(), TroykaView {
-
     /**
      * Presenter for current activity
      */
-    val presenter: Presenter = createPresenter()
+    val presenter: DumpListPresenter = createPresenter()
 
     /**
      * @savedInstanceState через extra получает cardId выбранной карты
@@ -32,38 +37,28 @@ class DumpListActivity: AppCompatActivity(), TroykaView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dumplist)
 
+        // Элемент TextView (для отладки, потом удалить)
+//        val textView = findViewById<TextView>(R.id.dumpFile)
+
         // Элемент ListView
         val lvDumps = findViewById<ListView>(R.id.lvDumps)
-        // Элемент TextView (для отладки, потом удалить)
-        val textView = findViewById<TextView>(R.id.dumpFile)
         // Номер карты, переданный через intent
         val cardId = intent.getStringExtra(getString(R.string.card_id))
 
-
-        // Каталог "TROYKA/cardId" на флешке
-        val dir = File(presenter.getAppDir(), cardId);
-//        textView.text = dir.absolutePath
-
-
-        // Список файлов в каталоге dir
-        val files = presenter.fileList(dir)
-//        for(file in files.orEmpty()) {
-//            textView.append("\n" + file.name)
-//        }
+        // Список файлов в каталоге cardId
+        val dumps = presenter.getDumpList(cardId)
 
         // Адаптер к массиву строк с именами файлов
-        val adapter = ArrayAdapter<String>(this, R.layout.item_dumplist, files.orEmpty().map { it.name })
+        val adapter = ArrayAdapter<String>(this, R.layout.item_dumplist, dumps)
         // Подключить ListView к данным
         lvDumps.adapter = adapter
 
         // Как легко и просто вставляется функция :)
         lvDumps.setOnItemClickListener {parent, view, position, id ->
-            // Получить имя файла выбранного дампа
-            val file = (view as android.widget.TextView).text
-
+            val dumpName = (view as android.widget.TextView).text
             val intent = Intent()
             intent.putExtra(getString(R.string.card_id), cardId)
-            intent.putExtra(getString(R.string.dump_file), file)
+            intent.putExtra(getString(R.string.dump_file), dumpName)
             setResult(-1, intent)
             finish()
         }
@@ -73,11 +68,10 @@ class DumpListActivity: AppCompatActivity(), TroykaView {
      * TODO: Создать презентер, нацеленный на нужную репозиторию
      */
     private fun createPresenter(): DumpListPresenter {
-        val fileHelper = FileHelper()
+        val fileHelper = (getContext() as TroykaCashApp).fileHelper
         val dumpRepo = DumpRepositoryImpl(fileHelper)
         val interactor = DumpListInteractor(dumpRepo)
         return DumpListPresenter(this, interactor)
     }
-
 }
 

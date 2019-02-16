@@ -1,23 +1,17 @@
 package metro.moscow.troykacash.presenter
 
 import android.os.Environment
+import metro.moscow.troykacash.interactor.DumpListInteractor
 import metro.moscow.troykacash.interactor.Interactor
 import metro.moscow.troykacash.utils.SharedData
 import java.io.File
 
-class DumpListPresenter(val view: TroykaView, val interactor: Interactor): Presenter {
+class DumpListPresenter(val view: TroykaView, val interactor: DumpListInteractor): Presenter {
 
     /**
-     * TODO: Get app files directory
+     * TODO: Получить список дампов для карты cardId
      */
-    override fun getAppDir(): File? {
-        return Environment.getExternalStorageDirectory()
-    }
-
-    /**
-     * TODO: Get file list from dir directory
-     */
-    override fun fileList(dir: File): Array<File>? {
-        return SharedData.dumpItems.toList().map{ File(it) }.toTypedArray()
+    fun getDumpList(cardId: String): Array<String> {
+        return interactor.getDumpList(cardId)
     }
 }
