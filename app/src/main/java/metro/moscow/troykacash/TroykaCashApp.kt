@@ -16,10 +16,12 @@ import metro.moscow.troykacash.dao.NfcHelper
 
 class TroykaCashApp : Application() {
 
-    var fileHelper = FileHelper.instance
-    var nfcHelper = NfcHelper.instance
+    val fileHelper = FileHelper.instance
+    val nfcHelper = NfcHelper.instance
 
     init {
+        // Прикольно. Это инициализация локальной статичекой переменной instance,
+        // которая живет в companion object
         instance = this
     }
 

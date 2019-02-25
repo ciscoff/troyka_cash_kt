@@ -2,8 +2,13 @@ package metro.moscow.troykacash.activity
 
 import android.content.Context
 import android.content.Intent
+import android.Manifest
 import android.support.v7.app.AppCompatActivity
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.Settings.Global.getString
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
@@ -20,6 +25,11 @@ import metro.moscow.troykacash.repository.DumpRepositoryImpl
 import metro.moscow.troykacash.utils.SharedData
 
 class ReadyActivity : AppCompatActivity(), TroykaView {
+
+    companion object {
+        const val REQUEST_PERMISSION = 1
+    }
+
 
     /**
      * Presenter for current activity
@@ -45,6 +55,12 @@ class ReadyActivity : AppCompatActivity(), TroykaView {
     override fun onStart() {
         super.onStart()
         presenter.onStart()
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_PERMISSION)
+        } else {
+
+        }
     }
 
     /**
@@ -101,6 +117,5 @@ class ReadyActivity : AppCompatActivity(), TroykaView {
         val interactor = ReadyInteractor(dumpRepo)
         return ReadyPresenter(this, interactor)
     }
-
 
 }
