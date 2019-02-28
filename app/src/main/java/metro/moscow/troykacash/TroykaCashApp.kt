@@ -11,8 +11,11 @@ package metro.moscow.troykacash
 
 import android.app.Application
 import android.content.Context
+import android.os.Environment
 import metro.moscow.troykacash.dao.FileHelper
 import metro.moscow.troykacash.dao.NfcHelper
+import metro.moscow.troykacash.utils.SharedData
+import java.io.File
 
 class TroykaCashApp : Application() {
 

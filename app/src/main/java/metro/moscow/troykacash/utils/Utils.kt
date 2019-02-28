@@ -11,5 +11,11 @@
 
 package metro.moscow.troykacash.utils
 
-class Utils {
+import android.util.Log
+import metro.moscow.troykacash.utils.SharedData.Companion.LOG_ID
+
+object Utils {
+    fun logI(message: String) {
+        Log.i(LOG_ID, message)
+    }
 }
